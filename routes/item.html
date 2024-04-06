@@ -1,102 +1,41 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Item List Finder</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.zbootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <hr>
-        <h1>Item List Finder</h1>
-        <hr>
+        <h1 class="text-center">Item List Finder</h1>
     
         <form action="http://localhost:3000/items" method="POST">
-           
-                <label for="itemName">Item Name:</label><br>
-                <input type="text" id="itemName" name="itemName" required><br>
-                <label for="itemDiscription">Item Description:</label><br>
-                <input type="text" id="itemDiscription" name="itemDiscription" required><br>
-                <label for="itemType">Item Type:</label><br> -->
-<!-- <input type="text" id="itemType" name="itemType" required><br><br> -->
-
-<!-- <select id="itemType" name="itemType" required>
+            <div class="form-group">
+                <label for="itemName">Item Name:</label>
+                <input type="text" class="form-control" id="itemName" name="itemName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="itemDiscription">Item Discription:</label>
+                <input type="text" class="form-control" id="itemDiscription" name="itemDiscription" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="itemType">Item Type:</label>
+                <select class="form-control" id="itemType" name="itemType" required>
                     <option value="object">Object</option>
                     <option value="container">Container</option>
-                </select><br><br> -->
-
-<!--Other fields-->
-<!-- <button type="submit" >Submit</button>
+                </select>
+            </div>
+    
+            <!-- Other fields can be added here -->
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
         </form>
     </div>
 
-    <script>
-        function validateForm() {
-            var itemType = document.getElementById("itemType").value;
-            if (itemType !== "object" && itemType !== "container") {
-                alert("Invalid item type! Please select either 'object' or 'container'.");
-                return false;
-            }
-            return true;
-        }
-    </script>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</html> -->
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Item list</title>
-  </head>
-  <body>
-    <div class="container">
-      <hr />
-      <h1>List of items</h1>
-      <hr />
-      <div>
-        <div class="row" id="items"></div>
-      </div>
-    </div>
-
-    <div id="editBookModal" class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Book</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-            <form id="editForm" method="POST">
-              <div class="form-group">
-                <label for="ISBN">ISBN</label>
-                <input class="form-control" name="isbn" id="isbn" />
-              </div>
-
-              <div class="form-group">
-                <label for="Title">Title</label>
-                <input class="form-control" name="title" id="title" />
-              </div>
-
-              <!--Other fields-->
-
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--Our JS file-->
-    <script src="book-list.js"></script>
-  </body>
 </html>
