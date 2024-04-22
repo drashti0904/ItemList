@@ -39,16 +39,18 @@ router.post('/',async(req,res)=>{
         }
     });
 
-    router.patch("/:id", async (req, res) => {
-        try {
-          const item = await Item.findById(req.params.id);
-          item.itemName = req.body.sub;
-          const a1 = await item.save();
-          res.json(a1);
-        } catch (err) {
-          res.send("Error");
-        }
-      });
+   router.post("/update/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const updateData = req.body;
+        const options = { new: true };
+        const updatedItem = await Item.findByIdAndUpdate(id, updateData, options);
+        res.json({ message: "Item updated successfully", updatedItem }); // Respond with success message and updated item
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 
       router.delete("/:id", async (req, res) => {
         try {

@@ -1,33 +1,69 @@
-// const setEditModal = (id) => {
-//   const http = new XMLHttpRequest();
+const setEditModal = (id) => {
+    const xhttp = new XMLHttpRequest();
 
-//   http.open("GET", `http://localhost:3000/items/${id}`, false);
-//   http.send();
+    xhttp.open("GET", `http://localhost:3000/items/${id}`, false);
+    xhttp.send();
 
-//   const book = JSON.paerse(http.responseText);
+    const item = JSON.parse(xhttp.responseText);
 
-//   const { itemName, itemDiscription, itemType } = item;
+    const { itemName, itemDiscription, itemType } = item;
 
-//   document.getElementById("id").value = id;
-//   document.getElementById("itemName").value = itemName;
-//   document.getElementById("itemDiscription").value = itemDiscription;
-//   document.getElementById("itemType").value = itemType;
+    document.getElementById("itemName").value = itemName;
+    document.getElementById("itemDiscription").value = itemDiscription;
+    document.getElementById("itemType").value = itemType;
 
-//   // setting up the action url for the book
-//   document.getElementById(
-//     "editForm"
-//   ).action = `http://localhost:3000/items${id}`;
-// };
+    // Setting up the action URL for the edit form
+    document.getElementById("editForm").action = `http://localhost:3000/items/update/${id}`;
 
-// const deleteBook = (id) => {
-//   const xhttp = new XMLHttpRequest();
+    // Listen for form submission and reload page after successful submission
+    document.getElementById("editForm").addEventListener("submit", async (event) => {
+        event.preventDefault(); // Prevent default form submission
 
-//   xhttp.open("DELETE", `http://localhost:3000/items/${id}`, false);
-//   xhttp.send();
+        const formData = new FormData(event.target);
+        const editData = {
+            itemName: formData.get("itemName"),
+            itemDiscription: formData.get("itemDiscription"),
+            itemType: formData.get("itemType")
+        };
 
-//   location.reload();
-// };
+        try {
+            const response = await fetch(`http://localhost:3000/items/update/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(editData)
+            });
+
+            if (response.ok) {
+                // alert("Item updated successfully");
+                location.reload(); // Reload the page after successful edit
+            } else {
+                throw new Error("Failed to update item");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            // alert("Failed to update item");
+        }
+    });
+};
+
+  
+
+const deleteItem = (id) => {
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open("DELETE", `http://localhost:3000/items/${id}`, false);
+    xhttp.send();
+
+    // Reloading the page
+    location.reload();
+}
+
+
+
 const loadItems = () => {
+
   const xhttp = new XMLHttpRequest(); // Corrected variable name
 
   xhttp.open("GET", "http://localhost:3000/items/", false);
@@ -63,4 +99,7 @@ const loadItems = () => {
   }
 };
 
+
+
 loadItems();
+
