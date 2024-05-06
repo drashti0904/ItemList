@@ -1,82 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lost Found Locator Listview</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    /> 
-    <style>
-      /* Custom CSS for spacing between elements and fields */
-      .modal-body form .form-group {
-        margin-bottom: 15px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <hr />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lost Found Locator Listview</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <style>
+    /* Custom CSS for spacing between elements and fields */
+    .modal-body form .form-group {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <hr />
+    <div class="d-flex justify-content-between align-items-center">
       <h1>List of items</h1>
-      <hr />
       <div>
-        <div class="row" id="items"></div>
+        <button id="searchButton" class="btn btn-primary" onclick="toggleSearchInput()">
+          <i class="bi bi-search"></i>
+        </button>
+        <input type="text" id="searchInput" class="form-control d-none" placeholder="Search..." style="max-width: 200px;">
       </div>
     </div>
+    <hr />
+    <div>
+      <div class="row" id="items"></div>
+    </div>
+    
 
-    <div id="editItemModal" class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit item</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <div class="modal-body">
-            <form id="editForm" method="POST">
-              <div class="form-group">
-                <label for="ItemName">ItemName</label>
-                <input class="form-control" name="itemName" id="itemName" />
-              </div>
-
-              <div class="form-group">
-                <label for="ItemDiscription">ItemDiscription</label>
-                <input
-                  class="form-control"
-                  name="itemDiscription"
-                  id="itemDiscription"
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="ItemType">ItemType</label>
-
-                <input class="form-control" name="itemType" id="itemType" />
-              </div>
-
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
+  <div id="editItemModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit item</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="editForm" method="POST">
+            <div class="form-group">
+              <label for="ItemName">ItemName</label>
+              <input class="form-control" name="itemName" id="itemName" />
+            </div>
+            <div class="form-group">
+              <label for="ItemDiscription">ItemDiscription</label>
+              <input class="form-control" name="itemDiscription" id="itemDiscription" />
+            </div>
+            <div class="form-group">
+              <label for="ItemType">ItemType</label>
+              <input class="form-control" name="itemType" id="itemType" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 
-    <script src="item_list.js"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  </body>
+  <script src="item_list.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-l58TbGeDxA7mqRcB0u8WBj41DcgJPeZjvZ1DIWtbmN1TZD/PUvMW+zVC7F/58y3u" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.2/js/bootstrap.min.js" integrity="sha384-+wKIoKi8d7zPNOoCr6P/4fmjqUzlpjD6ogO3d3ksNVXSBN7+kdzJweqicK2tQ8Q8" crossorigin="anonymous"></script>
+  
+
+  <script>
+    async function toggleSearchInput() {
+        const searchInput = document.getElementById("searchInput");
+        searchInput.classList.toggle("d-none");
+        searchInput.focus();
+
+        searchInput.addEventListener("input", async () => {
+            const inputValue = searchInput.value.trim().toLowerCase();
+            if (inputValue === "") return;
+
+            let endpoint = "";
+            if (inputValue === "object") {
+                endpoint = "objects";
+            } else if (inputValue === "container") {
+                endpoint = "containers";
+            } else {
+                // If input value is neither 'object' nor 'container', do nothing
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/items/${endpoint}`);
+                if (response.ok) {
+                    const items = await response.json();
+                    // Clear existing items
+                    document.getElementById("items").innerHTML = "";
+                    // Load new items
+                    for (let item of items) {
+                        const x = `
+                            <div class="col-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${item._id}</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">${item.itemName}</h6>
+
+                                        <div>Description: ${item.itemDiscription}</div>
+                                        <div>Type: ${item.itemType}</div>
+
+                                        <hr>
+
+                                        <button type="button" class="btn btn-danger" onClick="deleteItem('${item._id}')">Delete</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" 
+                                            data-target="#editItemModal" onClick="setEditModal('${item._id}')">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        document.getElementById("items").innerHTML += x;
+                    }
+                } else {
+                    throw new Error("Failed to fetch items");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                // Handle error
+            }
+        });
+    }
+</script>
+<!-- 1. APrat from api call we can search the items
+2. when the search box is clear whole list should be shown
+3. I have to use navigation  -->
+
+
+</body>
 </html>
