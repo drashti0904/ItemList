@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item Detail</title>
+</head>
+<body>
+  <h1>Item Detail Page</h1>
+  <div id="itemDetails"></div>
+
+  <script>
+    // Retrieve item ID from URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const itemId = urlParams.get('id');
+
+    // Fetch item details based on ID
+    async function fetchItemDetails(itemId) {
+      try {
+        const response = await fetch(`http://localhost:3000/items/${itemId}`);
+        if (response.ok) {
+          const item = await response.json();
+          displayItemDetails(item);
+        } else {
+          throw new Error("Failed to fetch item details");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        // Handle error
+      }
+    }
+
+    // Display item details on the page
+    function displayItemDetails(item) {
+      const itemDetailsContainer = document.getElementById("itemDetails");
+      itemDetailsContainer.innerHTML = `
+        <h2>${item.itemName}</h2>
+        <p>Description: ${item.itemDiscription}</p>
+        <p>Type: ${item.itemType}</p>
+      `;
+    }
+
+    // Fetch and display item details when the page loads
+    fetchItemDetails(itemId);
+  </script>
+</body>
+</html>

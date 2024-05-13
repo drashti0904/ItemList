@@ -63,43 +63,58 @@ const deleteItem = (id) => {
 
 
 const loadItems = () => {
-
-  const xhttp = new XMLHttpRequest(); // Corrected variable name
-
-  xhttp.open("GET", "http://localhost:3000/items/", false);
-  xhttp.send();
-
-  const items = JSON.parse(xhttp.responseText);
-    console.log(items)
-  for (let item of items) {
-      const x = `
-          <div class="col-4">
-              <div class="card">
-                  <div class="card-body">
-                      <h5 class="card-title">${item._id}</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">${item.itemName}</h6>
-
-                      <div>Description: ${item.itemDiscription}</div>
-                      <div>Type: ${item.itemType}</div>
-
-                      <hr>
-
-                      <button type="button" class="btn btn-danger" onClick="deleteItem('${item._id}')">Delete</button>
-                      <button type="button" class="btn btn-primary" data-toggle="modal" 
-                          data-target="#editItemModal" onClick="setEditModal('${item._id}')">
-                          Edit
-                      </button>
-                  </div>
-              </div>
-          </div>
-      `;
-
-      document.getElementById("items").innerHTML =
-      document.getElementById("items").innerHTML + x;
-  }
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "http://localhost:3000/items/", false);
+    xhttp.send();
+    const items = JSON.parse(xhttp.responseText);
+    for (let item of items) {
+        const x = `
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <a href="item_detail.html?id=${item._id}">
+                        <h5 class="card-title">${item._id}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${item.itemName}</h6>
+                        </a>
+                        <div>Description: ${item.itemDiscription}</div>
+                        <div>Type: ${item.itemType}</div>
+                        <hr>
+                        <button type="button" class="btn btn-danger" onClick="deleteItem('${item._id}')">Delete</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" 
+                            data-target="#editItemModal" onClick="setEditModal('${item._id}')">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.getElementById("items").innerHTML =
+            document.getElementById("items").innerHTML + x;
+    }
 };
+
+// Redirect page function
+// JavaScript to handle clicking on item names
+document.addEventListener("DOMContentLoaded", function() {
+    // Get all item links
+    var itemLinks = document.querySelectorAll('#items a');
+
+    // Attach click event handler to each item link
+    itemLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            // Prevent the default action (following the link)
+            event.preventDefault();
+
+            // Redirect to the URL specified in the item link
+            window.location.href = link.href;
+        });
+    });
+});
+
 
 
 
 loadItems();
+
+
 
